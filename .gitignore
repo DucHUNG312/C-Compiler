@@ -1,0 +1,46 @@
+# Binaries
+**/bin/
+**/build/
+**/x64/
+**/bin-int/
+**/build-int/
+**/obj/
+**/cache/**
+Intermediates/
+Binaries
+__pycache__
+
+# Visual Studio files and folder
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+**.csproj
+**.nsight-gfxproj
+**.DotSettings
+**.user
+
+# LFS Folders
+lfs/
+hooks/
+
+# Meta Files
+**.meta
+
+# Log files
+**.log
+
+# premake.exe
+Tools/premake/bin
+
+# Auto saves
+*.auto
+
+# Dumps
+*.nvdbg
+*.nv-gpudmp
+*gpudmp.json
+
+# File Exceptions
+!AssetRegistryCache.hzr
