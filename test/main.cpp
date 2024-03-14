@@ -1,17 +1,34 @@
-#include <iostream>
-
 #include "cc/core/CC.h"
-#include "gtest/gtest.h"
+
+#include "cc/lex/Source.h"
+#include "cc/lex/Tokenizer.h"
 
 using namespace cc;
 
-int main(int argc, char** argv)
+i32 main(i32 argc, c8** argv)
 {
-	testing::InitGoogleTest(&argc, argv);
-
 	debug::Logger::init();
 
-	CC_LOG_DEBUG_NL(getCCVersion());
+	const c8* filePath = "D:\\dev\\Compiler\\cc\\test\\testdata\\testdata.lcc";
 
-	return RUN_ALL_TESTS();
+	SourceFile source(filePath);
+
+	Tokenizer tokenizer(source);
+
+	tokenizer.tokenize();
+
+	Token* current = tokenizer.headToken().nextTok;
+
+	while (current->getKind() != tok::eof)
+	{
+		if (current->getKind() == tok::integer_literal)
+		{
+			CC_LOG_DEBUG("{} ", current->literalVal.getValue<i32>());
+		}
+		else
+		{
+			CC_LOG_DEBUG("{} ", current->rawVal);
+		}
+		current = current->nextTok;
+	}
 }

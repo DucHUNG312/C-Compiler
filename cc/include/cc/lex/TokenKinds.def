@@ -1,0 +1,105 @@
+#ifndef TOK
+#define TOK(ID)
+#endif
+#ifndef PUNCTUATOR
+#define PUNCTUATOR(ID, SP) TOK(ID)
+#endif
+#ifndef KEYWORD
+#define KEYWORD(ID, FLAG) TOK(kw_ ## ID)
+#endif
+
+// These define members of the tok::* namespace.
+
+TOK(unknown)             // Not a token.
+TOK(empty)             // Not a token.
+TOK(eof)                 // End of file.
+TOK(eol)                 // End of line.
+
+TOK(identifier)          // abcde123
+
+TOK(integer_literal)     // 123, 123B, 123H
+TOK(string_literal)      // "foo", 'foo'
+
+PUNCTUATOR(l_paren,             "(")
+PUNCTUATOR(r_paren,             ")")
+PUNCTUATOR(l_bracket,           "[")
+PUNCTUATOR(r_bracket,           "]")
+PUNCTUATOR(l_brace,             "{")
+PUNCTUATOR(r_brace,             "}")
+PUNCTUATOR(period,              ".")
+PUNCTUATOR(ellipsis,            "...")
+PUNCTUATOR(comma,               ",")
+PUNCTUATOR(semi,                ";")
+PUNCTUATOR(colon,               ":")
+PUNCTUATOR(question,            "?")
+PUNCTUATOR(hash,                "#")
+PUNCTUATOR(hash_hash,           "##")
+PUNCTUATOR(forward,             "->")
+PUNCTUATOR(plus,                "+")
+PUNCTUATOR(minus,               "-")
+PUNCTUATOR(star,                "*")
+PUNCTUATOR(slash,               "/")
+PUNCTUATOR(percent,             "%")
+PUNCTUATOR(plus_equal,          "+=")
+PUNCTUATOR(minus_equal,         "-=")
+PUNCTUATOR(star_equal,          "*=")
+PUNCTUATOR(slash_equal,         "/=")
+PUNCTUATOR(percent_equal,       "%=")
+PUNCTUATOR(plus_plus,           "++")
+PUNCTUATOR(minus_minus,         "--")
+PUNCTUATOR(less,                "<")
+PUNCTUATOR(greater,             ">")
+PUNCTUATOR(equal,               "=")
+PUNCTUATOR(exclaim,             "!")
+PUNCTUATOR(less_equal,          "<=")
+PUNCTUATOR(greater_equal,       ">=")
+PUNCTUATOR(equal_equal,         "==")
+PUNCTUATOR(exclaim_equal,       "!=")
+PUNCTUATOR(ampersand,           "&")
+PUNCTUATOR(pipe,                "|")
+PUNCTUATOR(caret,               "^")
+PUNCTUATOR(ampersand_ampersand, "&&")
+PUNCTUATOR(pipe_pipe,           "||")
+PUNCTUATOR(l_shift,             "<<")
+PUNCTUATOR(r_shift,             ">>")
+PUNCTUATOR(ampersand_equal,     "&=")
+PUNCTUATOR(pipe_equal,          "|=")
+PUNCTUATOR(caret_equal,         "^=")
+PUNCTUATOR(l_shift_equal,       "<<=")
+PUNCTUATOR(r_shift_equal,       ">>=")
+
+KEYWORD(AUTO                    , KEYALL)
+KEYWORD(BREAK                   , KEYALL)
+KEYWORD(CASE                    , KEYALL)
+KEYWORD(CHAR                    , KEYALL)
+KEYWORD(CONST                   , KEYALL)
+KEYWORD(CONTINUE                , KEYALL)
+KEYWORD(DO                      , KEYALL)
+KEYWORD(DEFAULT                 , KEYALL)
+KEYWORD(DOUBLE                  , KEYALL)
+KEYWORD(ELSE                    , KEYALL)
+KEYWORD(ENUM                    , KEYALL)
+KEYWORD(EXTERN                  , KEYALL)
+KEYWORD(FOR                     , KEYALL)
+KEYWORD(IF                      , KEYALL)
+KEYWORD(GOTO                    , KEYALL)
+KEYWORD(FLOAT                   , KEYALL)
+KEYWORD(INT                     , KEYALL)
+KEYWORD(LONG                    , KEYALL)
+KEYWORD(RETURN                  , KEYALL)
+KEYWORD(SIGNED                  , KEYALL)
+KEYWORD(STATIC                  , KEYALL)
+KEYWORD(SIZEOF                  , KEYALL)
+KEYWORD(SHORT                   , KEYALL)
+KEYWORD(STRUCT                  , KEYALL)
+KEYWORD(SWITCH                  , KEYALL)
+KEYWORD(TYPEDEF                 , KEYALL)
+KEYWORD(UNION                   , KEYALL)
+KEYWORD(UNSIGNED                , KEYALL)
+KEYWORD(VOID                    , KEYALL)
+KEYWORD(VOLATILE                , KEYALL)
+KEYWORD(WHILE                   , KEYALL)
+
+#undef KEYWORD
+#undef PUNCTUATOR
+#undef TOK

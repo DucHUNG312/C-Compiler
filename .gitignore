@@ -25,6 +25,9 @@ __pycache__
 lfs/
 hooks/
 
+# Simple tests
+testscripts/
+
 # Meta Files
 **.meta
 

@@ -23,11 +23,14 @@
 #define CC_HAVE__ALIGNED_MALLOC
 #endif // CC_PLATFORM_WINDOWS
 
-
+#ifdef CC_DEBUG_BUILD
 #ifdef CC_PLATFORM_WINDOWS
 #define CC_BREAK() __debugbreak()
 #else
 #define CC_BREAK() raise(SIGTRAP)
+#endif
+#else
+#define CC_BREAK()
 #endif
 
 #if (defined(_CPPUNWIND) || defined(__EXCEPTIONS))
@@ -66,19 +69,19 @@
 #endif // CC_DEBUG
 
 #if CC_ENABLE_LOG
-#define CC_LOG_TRACE(...) SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::trace, __VA_ARGS__)
-#define CC_LOG_DEBUG(...) SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::debug, __VA_ARGS__)
-#define CC_LOG_INFO(...) SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::info, __VA_ARGS__)
-#define CC_LOG_WARN(...) SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::warn, __VA_ARGS__)
-#define CC_LOG_ERROR(...) SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::err, __VA_ARGS__)
-#define CC_LOG_CRITICAL(...) SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::critical, __VA_ARGS__)
+#define CC_LOG_TRACE(...) SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::trace, __VA_ARGS__)
+#define CC_LOG_DEBUG(...) SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::debug, __VA_ARGS__)
+#define CC_LOG_INFO(...) SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::info, __VA_ARGS__)
+#define CC_LOG_WARN(...) SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::warn, __VA_ARGS__)
+#define CC_LOG_ERROR(...) SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::err, __VA_ARGS__)
+#define CC_LOG_CRITICAL(...) SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::critical, __VA_ARGS__)
 
-#define CC_LOG_TRACE_NL(...) (SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::trace, __VA_ARGS__), CC_LOG_TRACE('\n'))
-#define CC_LOG_DEBUG_NL(...) (SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::debug, __VA_ARGS__), CC_LOG_TRACE('\n'))
-#define CC_LOG_INFO_NL(...) (SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::info, __VA_ARGS__), CC_LOG_TRACE('\n'))
-#define CC_LOG_WARN_NL(...) (SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::warn, __VA_ARGS__), CC_LOG_TRACE('\n'))
-#define CC_LOG_ERROR_NL(...) (SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::err, __VA_ARGS__), CC_LOG_TRACE('\n'))
-#define CC_LOG_CRITICAL_NL(...) (SPDLOG_LOGGER_CALL(::debug::Logger::getCoreLogger(), spdlog::level::level_enum::critical, __VA_ARGS__), CC_LOG_TRACE('\n'))
+#define CC_LOG_TRACE_NL(...) (SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::trace, __VA_ARGS__), CC_LOG_TRACE('\n'))
+#define CC_LOG_DEBUG_NL(...) (SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::debug, __VA_ARGS__), CC_LOG_TRACE('\n'))
+#define CC_LOG_INFO_NL(...) (SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::info, __VA_ARGS__), CC_LOG_TRACE('\n'))
+#define CC_LOG_WARN_NL(...) (SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::warn, __VA_ARGS__), CC_LOG_TRACE('\n'))
+#define CC_LOG_ERROR_NL(...) (SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::err, __VA_ARGS__), CC_LOG_TRACE('\n'))
+#define CC_LOG_CRITICAL_NL(...) (SPDLOG_LOGGER_CALL(::cc::debug::Logger::getCoreLogger(), spdlog::level::level_enum::critical, __VA_ARGS__), CC_LOG_TRACE('\n'))
 #else
 #define CC_LOG_TRACE(...) ((void)0)
 #define CC_LOG_DEBUG(...) ((void)0)
@@ -114,7 +117,7 @@
 
 #define CC_CHECK(x) (CHECK(x))
 #define CC_CHECK_MSG(x, msg) (CHECK_MSG(x, msg))
-#define CC_CHECK_ASSERT(msg) (CHECK_ASSERT(false, msg))
+#define CC_UNREACHABLE(msg) (CHECK_ASSERT(false, msg))
 #define CC_CHECK_EQ(a, b) (CHECK_EQ(a, b))
 #define CC_CHECK_NE(a, b) (CHECK_NE(a, b))
 #define CC_CHECK_GT(a, b) (CHECK_GT(a, b))
@@ -200,7 +203,7 @@
 
 #ifndef CC_ALWAYS_INLINE
 #if defined(_MSC_VER)
-#define CC_ALWAYS_INLINE FORCE_INLINE
+#define CC_ALWAYS_INLINE CC_FORCE_INLINE
 #else
 #define CC_ALWAYS_INLINE inline
 #endif 

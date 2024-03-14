@@ -11,6 +11,7 @@ project "cc"
 	{
 		"**.h",
 		"**.inc.in",
+		"**.def",
 		"**.cpp",
 	}
 

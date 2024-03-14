@@ -6,6 +6,9 @@
 
 #include <cassert>
 #include <string>
+#include <variant>
+#include <iostream>
+#include <filesystem>
 
 // Unsigned int types.
 using u8 = uint8_t;
@@ -24,7 +27,7 @@ using f32 = float;
 using f64 = double;
 using f128 = double long;
 
-using c8 = char ;
+using c8 = char;
 
 // Ensure all types are of the correct size.
 static_assert(sizeof(u32) == sizeof(unsigned), "Expected u32 equals to unsigned size.");
