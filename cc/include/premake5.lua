@@ -1,4 +1,4 @@
-project "cc"
+project "include"
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++20"
@@ -10,20 +10,22 @@ project "cc"
 	files
 	{
 		"**.h",
+		"**.hpp",
+		"**.inc",
 		"**.inc.in",
 		"**.def",
-		"**.cpp",
 	}
 
 	includedirs
 	{
+		"%{IncludeDir.LLVM}",
+		"%{IncludeDir.LLVM_build}",
 		"%{IncludeDir.cc}",
 		"%{IncludeDir.spdlog}",
 	}
 
 	links
 	{
-		
 	}
 
 	filter "system:windows"
@@ -36,7 +38,11 @@ project "cc"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "CC_RELEASE_BUILD"
+		defines 
+		{
+			"CC_DEBUG_BUILD2",
+			--"CC_RELEASE_BUILD"
+		}
 		runtime "Release"
 		optimize "on"
 

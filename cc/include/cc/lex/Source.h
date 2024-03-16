@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cc/core/CC.h"
+#include "cc/Basic/CC.h"
 
 namespace cc
 {
@@ -10,8 +10,9 @@ namespace cc
 		const c8* path;
 		std::string buffer;
 		i32 size;
+		i32 id = 1; /// TODO
 	public:
 		SourceFile(const c8* path);
 		std::string readFile();
-	};
+	}; 
 }

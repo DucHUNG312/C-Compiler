@@ -1,7 +1,30 @@
-#include "cc/lex/Token.h"
+#include "cc/Lex/Token.h"
+#include "llvm/Support/ErrorHandling.h"
 
 namespace cc
 {
+	Object Token::setLiteralObject(std::string& rawVal, tok::TokenKind kind)
+	{
+		Object ret;
+		if (kind == tok::integer_literal)
+		{
+			ret = i32(std::stoi(rawVal)); /// TODO
+		}
+		else if (kind == tok::string_literal)
+		{
+			ret = rawVal;
+		}
+		else
+		{
+#ifdef CC_DEBUG_BUILD2
+			CC_LOG_CRITICAL_NL("Literal token only! in {} at {}", __FILE__, __LINE__);
+			CC_BREAK();
+#endif // CC_DEBUG_BUILD2
+		}
+
+		return ret;
+	}
+
 	namespace tok
 	{
 		static const c8* const tokNames[] = {
@@ -16,7 +39,7 @@ namespace cc
 			if (Kind < NUMS_TOKENS)
 				return tokNames[Kind];
 
-			CC_UNREACHABLE("unknown TokenKind");
+			llvm_unreachable("unknown TokenKind");
 			return tokNames[0]; // unknown
 		}
 
@@ -43,34 +66,21 @@ namespace cc
 		}
 	}
 
-	Token::Token(tok::TokenKind kind, const c8* start, const c8* end, i32 line)
-		: kind(kind), start(start), end(end), line(line)
+	Token::Token(tok::TokenKind kind, const c8* start, const c8* end, i32 line, i32 column)
+		: kind(kind), start(start), end(end), line(line), column(column)
 	{
 		length = end - start;
 		rawVal = std::string(start, length);
+
 		if (isLiteralToken(kind))
 		{
 			literal = true;
-			setLiteralVal(kind, rawVal);
+			literalVal = setLiteralObject(rawVal, kind);
 		}
 	}
 
-	void Token::setLiteralVal(tok::TokenKind kind, std::string& rawVal)
+	const c8* Token::getKindName()
 	{
-		if (kind == tok::integer_literal)
-		{
-			literalVal = std::stoi(rawVal); /// TODO
-		}
-		else if (kind == tok::string_literal)
-		{
-			literalVal = rawVal;
-		}
-		else
-		{
-#ifdef CC_DEBUG_BUILD
-			CC_LOG_CRITICAL_NL("Literal token only! in {} at {}", __FILE__, __LINE__);
-			CC_BREAK();
-#endif // CC_DEBUG_BUILD
-		}
+		return tok::GetTokenName(kind);
 	}
 }

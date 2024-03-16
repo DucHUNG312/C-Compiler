@@ -1,8 +1,8 @@
 #pragma once
 
-#include "cc/core/PCH.h"
-#include "cc/core/CC.h"
-#include "cc/utils/Object.h"
+#include "cc/Basic/PCH.h"
+#include "cc/Basic/CC.h"
+#include "cc/Basic/Object.h"
 
 namespace cc
 {
@@ -24,7 +24,7 @@ namespace cc
 	{
 	public:
 		Token() = default;
-		Token(tok::TokenKind kind, const c8* start, const c8* end, i32 line);
+		Token(tok::TokenKind kind, const c8* start, const c8* end, i32 line, i32 column);
 
 		bool isEOF()
 		{
@@ -51,8 +51,10 @@ namespace cc
 		i32 getLength() { return length; }
 		const c8* getStartChar() { return start; }
 		const c8* getEndChar() { return end; }
+		std::string getRawValue() { return rawVal; }
+		const c8* getKindName();
 	private:
-		void setLiteralVal(tok::TokenKind kind, std::string& rawVal);
+		static Object setLiteralObject(std::string& rawVal, tok::TokenKind kind);
 	public:
 		Token* nextTok;
 		bool literal = false;
@@ -61,6 +63,7 @@ namespace cc
 		std::string rawVal;
 		i32 line;
 		i32 length;
+		i32 column;
 		const c8* start;
 		const c8* end;
 	};

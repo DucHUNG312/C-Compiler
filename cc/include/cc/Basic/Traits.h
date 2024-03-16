@@ -19,12 +19,13 @@ namespace cc
 		template<typename T, typename... Types>
 		struct index_of<T, std::variant<Types...>>
 		{
-			static constexpr size_t value = []() constexpr
+			static constexpr i32 value = []() constexpr
 				{
-					size_t index = 0;
+					i32 index = 0;
+					i32 ret = 0;
 					bool found = false;
-					(void(std::is_same_v<T, Types> ? (found = true) : ++index), ...);
-					return found ? index : std::variant_npos;
+					(void(std::is_same_v<T, Types> ? (found = true, ret = index) : ++index), ...);
+					return found ? ret : -1;
 				}();
 		};
 	}
