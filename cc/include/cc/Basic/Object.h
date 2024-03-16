@@ -1,7 +1,7 @@
 #pragma once
 
-#include "cc/core/CC.h"
-#include "cc/utils/Traits.h"
+#include "cc/Basic/CC.h"
+#include "cc/Basic/Traits.h"
 
 namespace cc
 {
@@ -12,24 +12,11 @@ namespace cc
 
 	class Object
 	{
-		enum ObjectType : u8
+		enum ObjectType : unsigned short
 		{
-			EMPTY,
-			U8,
-			U16,
-			U32,
-			U64,
-			I8,
-			I16,
-			I32,
-			I64,
-			F32,
-			F64,
-			F128,
-			C8,
-			LITERAL,
-			STRING,
-
+#define OBJECT(ID, SP) ID,
+#include "cc/Basic/ObjectType.def"
+			NUM_TYPES
 		};
 	public:
 		Object() = default;
@@ -58,6 +45,8 @@ namespace cc
 		{
 			return value.index() == 0;
 		}
+
+		const c8* typeToString();
 	private:
 		ObjectValue value;
 		ObjectType type;

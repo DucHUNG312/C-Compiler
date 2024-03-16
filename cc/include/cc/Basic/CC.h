@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cc/core/Version.h"
+#include "cc/Basic/Version.h"
 
 #ifdef CC_PLATFORM_WINDOWS
 #pragma warning(disable : 4251)
@@ -23,14 +23,14 @@
 #define CC_HAVE__ALIGNED_MALLOC
 #endif // CC_PLATFORM_WINDOWS
 
-#ifdef CC_DEBUG_BUILD
+#ifdef CC_DEBUG_BUILD2
 #ifdef CC_PLATFORM_WINDOWS
 #define CC_BREAK() __debugbreak()
 #else
 #define CC_BREAK() raise(SIGTRAP)
 #endif
 #else
-#define CC_BREAK()
+#define CC_BREAK() ""
 #endif
 
 #if (defined(_CPPUNWIND) || defined(__EXCEPTIONS))
@@ -62,7 +62,7 @@
 #define CC_ENABLE_LOG 1
 
 // enable log
-#include "cc/utils/Log.h"
+#include "cc/Basic/Log.h"
 // Core log macros
 #ifdef CC_DEBUG
 

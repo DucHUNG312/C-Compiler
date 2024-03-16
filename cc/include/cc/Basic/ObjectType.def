@@ -1,0 +1,19 @@
+#ifndef OBJECT
+#define OBJECT(ID, STR)
+#endif
+
+OBJECT(empty,         "empty")
+OBJECT(uint8,         "u8")  
+OBJECT(uint16,        "u16")
+OBJECT(uint32,        "u32")
+OBJECT(uint64,        "u64")
+OBJECT(int8,          "i8")
+OBJECT(int16,         "i16")
+OBJECT(int32,         "i32")
+OBJECT(int64,         "i64")
+OBJECT(float32,       "f32")
+OBJECT(float64,       "f64")
+OBJECT(float128,      "f128")
+OBJECT(char8,         "c8")
+OBJECT(literal_t,     "literal")
+OBJECT(string,        "string")

@@ -1,4 +1,4 @@
-#include "cc/lex/Tokenizer.h"
+#include "cc/Lex/Tokenizer.h"
 
 namespace cc
 {
@@ -22,37 +22,37 @@ namespace cc
 				next();
 				break;
 			case '\n':
-				column = 1;
+				currentColumn = 1;
 				currentLine++;
 				currentPos++;
 				break;
 			case '\0':
 				break;
 			case '+':
-				currentTok = currentTok->nextTok = makeToken(tok::plus, At(currentPos), At(currentPos + 1), currentLine);
+				currentTok = currentTok->nextTok = makeToken(tok::plus, At(currentPos), At(currentPos + 1), currentLine, currentColumn);
 				next();
 				break;
 			case '-':
-				currentTok = currentTok->nextTok = makeToken(tok::minus, At(currentPos), At(currentPos + 1), currentLine);
+				currentTok = currentTok->nextTok = makeToken(tok::minus, At(currentPos), At(currentPos + 1), currentLine, currentColumn);
 				next();
 				break;
 			case '*':
-				currentTok = currentTok->nextTok = makeToken(tok::star, At(currentPos), At(currentPos + 1), currentLine);
+				currentTok = currentTok->nextTok = makeToken(tok::star, At(currentPos), At(currentPos + 1), currentLine, currentColumn);
 				next();
 				break;
 			case '/':
-				currentTok = currentTok->nextTok = makeToken(tok::slash, At(currentPos), At(currentPos + 1), currentLine);
+				currentTok = currentTok->nextTok = makeToken(tok::slash, At(currentPos), At(currentPos + 1), currentLine, currentColumn);
 				next();
 				break;
 			case '=':
 				if (matchNext('='))
 				{
-					currentTok = currentTok->nextTok = makeToken(tok::equal, At(currentPos), At(currentPos + 2), currentLine);
+					currentTok = currentTok->nextTok = makeToken(tok::equal_equal, At(currentPos), At(currentPos + 2), currentLine, currentColumn);
 					next(2);
 				}
 				else
 				{
-					currentTok = currentTok->nextTok = makeToken(tok::equal, At(currentPos), At(currentPos + 1), currentLine);
+					currentTok = currentTok->nextTok = makeToken(tok::equal, At(currentPos), At(currentPos + 1), currentLine, currentColumn);
 					next();
 				}
 				break;
@@ -66,24 +66,24 @@ namespace cc
 						next();
 					}
 
-					currentTok = currentTok->nextTok = makeToken(tok::integer_literal, At(pos), At(currentPos), currentLine);
+					currentTok = currentTok->nextTok = makeToken(tok::integer_literal, At(pos), At(currentPos), currentLine, currentColumn);
 				}
 				else
 				{
-					currentTok = currentTok->nextTok = makeToken(tok::unknown, At(currentPos), At(currentPos + 1), currentLine);
+					currentTok = currentTok->nextTok = makeToken(tok::unknown, At(currentPos), At(currentPos + 1), currentLine, currentColumn);
 					next();
 				}
 				break;
 			}
 		}
 
-		currentTok = currentTok->nextTok = makeToken(tok::eof, At(currentPos), At(currentPos + 1), currentLine);
+		currentTok = currentTok->nextTok = makeToken(tok::eof, At(currentPos), At(currentPos + 1), currentLine, currentColumn);
 		return head.nextTok;
 	}
 
-	Token* Tokenizer::makeToken(tok::TokenKind kind, const c8* start, const c8* end, i32 line)
+	Token* Tokenizer::makeToken(tok::TokenKind kind, const c8* start, const c8* end, i32 line, i32 column)
 	{
-		return new Token(kind, start, end, line);
+		return new Token(kind, start, end, line, column);
 	}
 
 	c8 Tokenizer::current()
@@ -94,7 +94,7 @@ namespace cc
 	c8 Tokenizer::next(i32 offset)
 	{
 		currentPos += offset;
-		column += offset;
+		currentColumn += offset;
 		return current();
 	}
 
@@ -115,7 +115,7 @@ namespace cc
 		while (isWhiteSpace(current()))
 		{
 			currentPos++;
-			column++;
+			currentColumn++;
 		}
 	}
 

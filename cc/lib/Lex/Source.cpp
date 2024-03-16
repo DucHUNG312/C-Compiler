@@ -1,4 +1,4 @@
-#include "cc/lex/Source.h"
+#include "cc/Lex/Source.h"
 
 namespace cc
 {
@@ -15,10 +15,10 @@ namespace cc
 
 		if (!fileStream.is_open())
 		{
-#ifdef CC_DEBUG_BUILD
+#ifdef CC_DEBUG_BUILD2
 			CC_LOG_CRITICAL_NL("Error opening file {}, in {} at {}", path, __FILE__, __LINE__);
 			CC_BREAK();
-#endif // CC_DEBUG_BUILD
+#endif // CC_DEBUG_BUILD2
 		}
 
 		std::ostringstream sstr;

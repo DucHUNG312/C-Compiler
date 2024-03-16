@@ -1,7 +1,6 @@
-#include "cc/core/CC.h"
-
-#include "cc/lex/Source.h"
-#include "cc/lex/Tokenizer.h"
+#include "cc/Basic/CC.h"
+#include "cc/Lex/Source.h"
+#include "cc/Lex/Tokenizer.h"
 
 using namespace cc;
 
@@ -9,7 +8,7 @@ i32 main(i32 argc, c8** argv)
 {
 	debug::Logger::init();
 
-	const c8* filePath = "D:\\dev\\Compiler\\cc\\test\\testdata\\testdata.lcc";
+	const c8* filePath = "D:\\dev\\Compiler\\cc\\cc\\test\\testdata\\testdata.lcc";
 
 	SourceFile source(filePath);
 
@@ -23,11 +22,11 @@ i32 main(i32 argc, c8** argv)
 	{
 		if (current->getKind() == tok::integer_literal)
 		{
-			CC_LOG_DEBUG("{} ", current->literalVal.getValue<i32>());
+			CC_LOG_DEBUG("{}({}) ", current->literalVal.getValue<i32>(), current->literalVal.typeToString());
 		}
 		else
 		{
-			CC_LOG_DEBUG("{} ", current->rawVal);
+			CC_LOG_DEBUG("{}({}) ", current->rawVal, current->getKindName());
 		}
 		current = current->nextTok;
 	}

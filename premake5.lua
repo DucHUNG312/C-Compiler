@@ -26,7 +26,11 @@ workspace "CC"
 		include "thirdparty/googletest"
 	group ""
 
-	include "cc"
-	include "test"
+	group "CC"
+		include "cc/include"
+		include "cc/lib"
+		include "cc/test"
+	group ""
+	
 
 	

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cc/core/Version.inc.in"
+#include "cc/Basic/Version.inc.in"
 
 namespace cc
 {
